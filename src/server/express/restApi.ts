@@ -2,7 +2,7 @@ import packageJSON from "../../../package.json";
 import express, { Application } from "express";
 import cors from "cors";
 import { Request, Response } from "express";
-import { RespExampleType, ApodResponseType } from "@/typings/types";
+import { RespExampleType, ApodResponseType, NeoResponseType, NearEarthObject } from "@/typings/types";
 import axios from "axios";
 
 const app: Application = express();
@@ -52,7 +52,52 @@ app.get(`/api/v1/apod/:date?`, async (req: Request, res: Response) => {
   }
 });
 
+// Near Earth Objects Feed
+app.post(`/api/v1/neo`, async (req: Request, res: Response) => {
+  try {
+    const { startDate, endDate } = req.body;
 
+
+    const nasaRes = await axios.get<NeoResponseType>(
+      "https://api.nasa.gov/neo/rest/v1/feed",
+      {
+        params: {
+          api_key: NASA_API_KEY,
+          ...(startDate && { startDate }),
+          ...(endDate && { endDate }),
+        },
+      }
+    );
+    
+    const respObj: NeoResponseType = nasaRes.data ;
+    res.send(respObj);
+  } catch (error) {
+    console.error("Error fetching NEO:", error);
+    res.status(500).json({ error: "Failed to fetch NEO data" });
+  }
+});
+
+// Near Earth Objects Lookup
+app.get(`/api/v1/neo/:asteroid_id`, async (req: Request, res: Response) => {
+  try {
+    const { asteroid_id } = req.params;
+    
+    const nasaRes = await axios.get<NearEarthObject>(
+      `https://api.nasa.gov/neo/rest/v1/neo/${asteroid_id}`,
+      {
+        params: {
+          api_key: NASA_API_KEY,
+        },
+      }
+    );
+
+    const respObj: NearEarthObject = nasaRes.data;
+    res.send(respObj);
+  } catch (error) {
+    console.error("Error fetching NEO astroid:", error);
+    res.status(500).json({ error: "Failed to fetch NEO astroid" });
+  }
+});
 
 
 app.use(express.static("./.local/vite/dist"));
