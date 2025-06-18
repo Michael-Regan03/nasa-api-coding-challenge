@@ -2,13 +2,21 @@ import packageJSON from "../../../package.json";
 import express, { Application } from "express";
 import cors from "cors";
 import { Request, Response } from "express";
-import { RespExampleType, ApodResponseType, NeoResponseType, NearEarthObject } from "@/typings/types";
+import {
+  RespExampleType,
+  ApodResponseType,
+  NeoResponseType,
+  NearEarthObject,
+} from "@/typings/types";
 import axios from "axios";
+import {
+  extractAllNEOs,
+  normalizeAsteroidSizes,
+} from "@/services/neo/normalizeAsteroidSize";
 
 const app: Application = express();
 
 require("dotenv").config();
-
 
 app.use(express.json({ limit: "20mb" }));
 app.use(cors());
@@ -57,6 +65,12 @@ app.post(`/api/v1/neo`, async (req: Request, res: Response) => {
   try {
     const { startDate, endDate } = req.body;
 
+    console.log(
+      "Received request with startDate:",
+      startDate,
+      "endDate:",
+      endDate
+    );
 
     const nasaRes = await axios.get<NeoResponseType>(
       "https://api.nasa.gov/neo/rest/v1/feed",
@@ -68,9 +82,15 @@ app.post(`/api/v1/neo`, async (req: Request, res: Response) => {
         },
       }
     );
-    
-    const respObj: NeoResponseType = nasaRes.data ;
-    res.send(respObj);
+
+    const respObj: NeoResponseType = nasaRes.data;
+
+    const NEOs = extractAllNEOs(respObj);
+    const normalizedNEOs = normalizeAsteroidSizes(NEOs);
+
+    console.log(normalizedNEOs.length, " normalized NEOs size");
+
+    res.send(normalizedNEOs);
   } catch (error) {
     console.error("Error fetching NEO:", error);
     res.status(500).json({ error: "Failed to fetch NEO data" });
@@ -81,7 +101,7 @@ app.post(`/api/v1/neo`, async (req: Request, res: Response) => {
 app.get(`/api/v1/neo/:asteroid_id`, async (req: Request, res: Response) => {
   try {
     const { asteroid_id } = req.params;
-    
+
     const nasaRes = await axios.get<NearEarthObject>(
       `https://api.nasa.gov/neo/rest/v1/neo/${asteroid_id}`,
       {
@@ -98,7 +118,6 @@ app.get(`/api/v1/neo/:asteroid_id`, async (req: Request, res: Response) => {
     res.status(500).json({ error: "Failed to fetch NEO astroid" });
   }
 });
-
 
 app.use(express.static("./.local/vite/dist"));
 

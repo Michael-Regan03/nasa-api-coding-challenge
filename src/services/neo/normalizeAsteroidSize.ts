@@ -1,4 +1,13 @@
-import { NearEarthObject, NormalizedNearEarthObject } from "@/typings/types";
+import {
+  NeoResponseType,
+  NearEarthObject,
+  NormalizedNearEarthObject,
+} from "@/typings/types";
+
+//Get all NEO's from NASA response
+export const extractAllNEOs = (data: NeoResponseType): NearEarthObject[] => {
+  return Object.values(data.near_earth_objects).flat();
+};
 
 // Function to compute the average diameter
 export function getAverageKmDiameter(obj: NearEarthObject): number {
