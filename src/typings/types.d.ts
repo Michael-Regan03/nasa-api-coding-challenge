@@ -14,7 +14,6 @@ export type ApodResponseType = {
   url: string;
 };
 
-
 export type NeoResponseType = {
   links: {
     next: string;
@@ -34,7 +33,7 @@ export type NearEarthObject = {
   id: string;
   neo_reference_id: string;
   name: string;
-  designation?: string,
+  designation?: string;
   nasa_jpl_url: string;
   absolute_magnitude_h: number;
   estimated_diameter: {
@@ -103,3 +102,7 @@ export type OrbitClass = {
   orbit_class_range: string;
 };
 
+export type NormalizedNearEarthObject = NearEarthObject & {
+  average_km_diameter: number;
+  diameter_percent_of_max: number;
+};
