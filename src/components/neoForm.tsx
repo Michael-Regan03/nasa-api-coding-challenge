@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { NormalizedNearEarthObject } from "@/typings/types";
 import NeoSizeDisplay from "./neoSizeDisplay";
 import { DateRangeForm } from "./dateRangeForm";
-
+import NeoCloseApproachVisualizer from "./neoCloseApproachVisualiser";
 // Form to select a date range and fetch NEO's
 const NeoForm: React.FC<{}> = () => {
   const [startDate, setStartDate] = useState<Date | undefined>();
@@ -37,6 +37,7 @@ const NeoForm: React.FC<{}> = () => {
       },
       body: JSON.stringify({ startDate: start, endDate: end }),
     });
+    
     const data: NormalizedNearEarthObject[] = await res.json();
     setObjects(data || []);
   }
@@ -52,6 +53,7 @@ const NeoForm: React.FC<{}> = () => {
         loading={loading}
       />
       <NeoSizeDisplay objects={objects} />
+      <NeoCloseApproachVisualizer neos={objects} colour="blue"/>
     </div>
   );
 };

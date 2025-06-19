@@ -2,7 +2,7 @@ import { useState, JSX } from "react";
 import styles from "./index.module.css";
 import { commonExample } from "@/utils/utils.ts";
 import { NeoResponseType, NearEarthObject} from "@/typings/types";
-
+import NeoForm from "@/components/neoForm";
 
 const HomePage = (): JSX.Element => {
   const urlWithProxy = `api/v1/neo`;
@@ -45,6 +45,8 @@ const HomePage = (): JSX.Element => {
         Access server using proxy
       </button>
         <p>data: {data2 ? data2?.designation : 'No data yet'}</p>
+
+      <NeoForm ></NeoForm>
     </div>
   );
 };
