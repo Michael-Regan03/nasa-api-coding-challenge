@@ -11,7 +11,7 @@ export default [
       ".local/**/*",
       "node_modules/**/*",
       "src/coverage/**/*",
-      "src/components/ui/**/*",
+      "src/components/ui",
     ],
   },
   {
