@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { DateRangeForm } from "../dateRangeForm";
-import { SunVisualisation } from "../sunVisualisation";
+import { SunVisualisation } from "../cme/sunVisualisation";
 import { CoronalMassEjectionAnalysis } from "@/typings/types";
 
 const CMEForm: React.FC = () => {
@@ -15,9 +15,7 @@ const CMEForm: React.FC = () => {
     if (!startDate || !endDate) {
       return;
     }
-
     setLoading(true);
-
     try {
       await getDataFromServer();
     } catch (err) {
