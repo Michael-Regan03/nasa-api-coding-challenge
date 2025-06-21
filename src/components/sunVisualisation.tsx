@@ -24,6 +24,13 @@ export const SunVisualisation: React.FC<SunVisualisationProps> = ({
   const initializedRef = useRef(false);
   const sceneRef = useRef<THREE.Scene | null>(null);
   const modelRef = useRef<THREE.Group | THREE.Object3D | undefined>(undefined);
+  const [tooltip, setTooltip] = useState<{
+    time: string;
+    type: string;
+    note: string;
+    x: number;
+    y: number;
+  } | null>(null);
 
   useEffect(() => {
     if (!mountRef.current || initializedRef.current) return;
@@ -103,6 +110,40 @@ export const SunVisualisation: React.FC<SunVisualisationProps> = ({
       );
     };
 
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+
+    // Handle mouse move events to show tooltips
+    const handleMouseMove = (event: MouseEvent) => {
+      if (!mountRef.current || !sceneRef.current) return;
+
+      const rect = mountRef.current.getBoundingClientRect();
+      mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, camera);
+
+      // Get all CME markers
+      const cmeMarkers = cmeMarkersRef.current.map((m) => m.mesh);
+      const intersects = raycaster.intersectObjects(cmeMarkers, true);
+
+      if (intersects.length > 0) {
+        const firstHit = intersects[0];
+        const cmeData = firstHit.object.userData.cme;
+        setTooltip({
+          time: cmeData.time21_5,
+          type: cmeData.type,
+          note: cmeData.note,
+          x: event.clientX,
+          y: event.clientY,
+        });
+      } else {
+        setTooltip(null);
+      }
+    };
+
+    mountRef.current.addEventListener("mousemove", handleMouseMove);
+
     return () => {
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationFrameId);
@@ -151,6 +192,10 @@ export const SunVisualisation: React.FC<SunVisualisationProps> = ({
           point.longitude,
           sunRadius
         );
+        marker.mesh.userData = {
+          cme: point,
+          isCMEMarker: true,
+        };
         modelRef.current!.add(marker.mesh);
         cmeMarkersRef.current.push(marker);
       });
@@ -163,10 +208,22 @@ export const SunVisualisation: React.FC<SunVisualisationProps> = ({
 
   return (
     <div className="relative w-full bg-black">
+      {/* Mount for scene */}
       <div
         ref={mountRef}
         className="mx-auto w-full max-w-[100vw] aspect-square"
       />
+      {/* Tool tip */}
+      {tooltip && (
+        <div
+          className="fixed z-50 px-2 py-1 text-sm bg-white text-black border rounded pointer-events-none"
+          style={{ top: tooltip.y + 10, left: tooltip.x + 10 }}
+        >
+          <div>time: {tooltip.time}</div>
+          <div>type: {tooltip.type}</div>
+          <div>note: {tooltip.note}</div>
+        </div>
+      )}
       {/* Loading overlay */}
       {loading && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/80 z-10">
