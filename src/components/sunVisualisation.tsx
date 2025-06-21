@@ -137,7 +137,7 @@ export const SunVisualisation: React.FC<SunVisualisationProps> = ({
     const updateCMEMarkers = (cmePoints: CoronalMassEjectionAnalysis[]) => {
       // Clear existing markers
       cmeMarkersRef.current.forEach((marker) => {
-        sceneRef.current?.remove(marker.mesh);
+        modelRef.current?.remove(marker.mesh);
       });
       cmeMarkersRef.current = [];
       if (!modelRef.current || !sceneRef.current) return;
@@ -151,7 +151,7 @@ export const SunVisualisation: React.FC<SunVisualisationProps> = ({
           point.longitude,
           sunRadius
         );
-        sceneRef.current!.add(marker.mesh);
+        modelRef.current!.add(marker.mesh);
         cmeMarkersRef.current.push(marker);
       });
     };
