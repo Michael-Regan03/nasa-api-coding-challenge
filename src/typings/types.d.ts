@@ -106,3 +106,28 @@ export type NormalizedNearEarthObject = NearEarthObject & {
   average_km_diameter: number;
   diameter_percent_of_max: number;
 };
+
+type CoronalMassEjectionAnalysis = {
+  time21_5: string;
+  latitude: number;
+  longitude: number;
+  halfAngle: number;
+  speed: number;
+  type: string;
+  isMostAccurate: boolean;
+  associatedCMEID: string;
+  associatedCMEstartTime: string;
+  note: string;
+  associatedCMELink: string;
+  catalog: string;
+  featureCode: string;
+  dataLevel: string;
+  measurementTechnique: string;
+  imageType: string;
+  tilt: number | null;
+  minorHalfWidth: number | null;
+  speedMeasuredAtHeight: number | null;
+  submissionTime: string;
+  versionId: number;
+  link: string;
+};
