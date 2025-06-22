@@ -4,6 +4,7 @@ import React from "react";
 import { DatePickerWithInput } from "@/components/ui/datePickerWithInput";
 import { Button } from "./ui/button";
 
+// Form Props
 export type DateRangeFormProps = {
   startDate: Date | undefined;
   endDate: Date | undefined;
@@ -13,6 +14,7 @@ export type DateRangeFormProps = {
   loading: boolean;
 };
 
+// Form defining a date range with start and end dates
 export const DateRangeForm: React.FC<DateRangeFormProps> = ({
   startDate,
   endDate,
