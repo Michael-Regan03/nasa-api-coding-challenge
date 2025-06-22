@@ -7,6 +7,7 @@ import {
   ApodResponseType,
   NeoResponseType,
   NearEarthObject,
+  CoronalMassEjectionAnalysis,
 } from "@/typings/types";
 import axios from "axios";
 import {
@@ -116,6 +117,31 @@ app.get(`/api/v1/neo/:asteroid_id`, async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Error fetching NEO astroid:", error);
     res.status(500).json({ error: "Failed to fetch NEO astroid" });
+  }
+});
+
+// Coronal Mass Ejection Analysis
+app.post(`/api/v1/cme`, async (req: Request, res: Response) => {
+  try {
+    const { startDate, endDate } = req.params;
+
+    const nasaRes = await axios.get<CoronalMassEjectionAnalysis[]>(
+      `https://api.nasa.gov/DONKI/CMEAnalysis`,
+      {
+        params: {
+          api_key: NASA_API_KEY,
+          ...(startDate && { startDate }),
+          ...(endDate && { endDate }),
+        },
+      }
+    );
+
+    const respObj: CoronalMassEjectionAnalysis[] = nasaRes.data;
+    console.log(" CME data length", respObj);
+    res.send(respObj);
+  } catch (error) {
+    console.error("Error fetching CME data:", error);
+    res.status(500).json({ error: "Failed to fetch CME data" });
   }
 });
 
