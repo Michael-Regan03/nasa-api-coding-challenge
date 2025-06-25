@@ -11,7 +11,7 @@ const NeoCloseApproachVisualizer: React.FC<Props> = ({ neos, colour }) => {
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
-    if (!svgRef.current || neos.length === 0) return;
+    if (!svgRef.current) return;
 
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove(); // clear on update
@@ -39,7 +39,7 @@ const NeoCloseApproachVisualizer: React.FC<Props> = ({ neos, colour }) => {
     // Earth image
     group
       .append("image")
-      .attr("href", "/images/earth.png")
+      .attr("href", "/images/earth1.png")
       .attr("x", center.x - earthRadius)
       .attr("y", center.y - earthRadius)
       .attr("width", 60)
@@ -81,8 +81,13 @@ const NeoCloseApproachVisualizer: React.FC<Props> = ({ neos, colour }) => {
   }, [neos]);
 
   return (
-    <div className="orbit-container">
-      <svg ref={svgRef} width={400} height={400} viewBox="0 0 400 400" />
+    <div className="orbit-container flex flex-col gap-6 bg-[url('/images/space.jpg')] bg-cover bg-center min-h-screen">
+      <svg
+        ref={svgRef}
+        className="w-full h-full"
+        viewBox="0 0 400 400"
+        preserveAspectRatio="xMidYMid meet"
+      />
     </div>
   );
 };

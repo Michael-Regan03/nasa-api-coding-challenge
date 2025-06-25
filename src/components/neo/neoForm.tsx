@@ -1,16 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NormalizedNearEarthObject } from "@/typings/types";
-import NeoSizeDisplay from "../neoSizeDisplay";
+import NeoSizeDisplay from "./neoSizeDisplay";
 import { DateRangeForm } from "../dateRangeForm";
-import NeoCloseApproachVisualizer from "../neoCloseApproachVisualiser";
+import NeoCloseApproachVisualizer from "./neoCloseApproachVisualiser";
 import { getDataFromServer } from "@/components/getDataFromServer";
 
 const NeoForm: React.FC<{}> = () => {
   const [startDate, setStartDate] = useState<Date | undefined>();
   const [endDate, setEndDate] = useState<Date | undefined>();
   const [objects, setObjects] = useState<NormalizedNearEarthObject[]>([]);
+
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async () => {
@@ -33,8 +34,12 @@ const NeoForm: React.FC<{}> = () => {
     }
   };
 
+  useEffect(() => {
+    setObjects([]);
+  }, []);
+
   return (
-    <div className="flex flex-col gap-6">
+    <div className="min-h-screen py-8 flex flex-col items-center bg-gray-50 gap-6">
       <DateRangeForm
         startDate={startDate}
         endDate={endDate}
@@ -43,8 +48,11 @@ const NeoForm: React.FC<{}> = () => {
         onSubmit={onSubmit}
         loading={loading}
       />
-      <NeoSizeDisplay objects={objects} />
-      <NeoCloseApproachVisualizer neos={objects} colour="blue" />
+
+      <div className="w-full">
+        <NeoCloseApproachVisualizer neos={objects} colour="blue" />
+        <NeoSizeDisplay objects={objects} />
+      </div>
     </div>
   );
 };
