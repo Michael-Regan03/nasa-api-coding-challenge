@@ -5,9 +5,10 @@ import { ApodResponseType } from "@/typings/types";
 import { getDataFromServer } from "@/components/getDataFromServer";
 import { DatePickerWithInput } from "@/components/ui/datePickerWithInput";
 import { ApodDisplay } from "./apodDisplay";
+import { useEffect } from "react";
 
 const APODForm: React.FC<{}> = () => {
-  const [date, setDate] = useState<Date | undefined>();
+  const [date, setDate] = useState<Date | undefined>(() => new Date());
   const [data, setData] = useState<ApodResponseType>();
   const [loading, setLoading] = useState(false);
   const onSubmit = async () => {
@@ -29,6 +30,10 @@ const APODForm: React.FC<{}> = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    onSubmit();
+  }, []);
 
   return (
     <div className="flex flex-col gap-6">
