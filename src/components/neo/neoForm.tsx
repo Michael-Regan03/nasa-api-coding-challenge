@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import { NormalizedNearEarthObject } from "@/typings/types";
-import NeoSizeDisplay from "./neoSizeDisplay";
-import { DateRangeForm } from "./dateRangeForm";
-import NeoCloseApproachVisualizer from "./neoCloseApproachVisualiser";
+import NeoSizeDisplay from "../neoSizeDisplay";
+import { DateRangeForm } from "../dateRangeForm";
+import NeoCloseApproachVisualizer from "../neoCloseApproachVisualiser";
 import { getDataFromServer } from "@/components/getDataFromServer";
 
 const NeoForm: React.FC<{}> = () => {
