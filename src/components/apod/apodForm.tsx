@@ -10,7 +10,6 @@ const APODForm: React.FC<{}> = () => {
   const [date, setDate] = useState<Date | undefined>();
   const [data, setData] = useState<ApodResponseType>();
   const [loading, setLoading] = useState(false);
-
   const onSubmit = async () => {
     setLoading(true);
     try {

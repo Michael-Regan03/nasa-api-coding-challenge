@@ -20,6 +20,8 @@ export async function getDataFromServer<T = any>(
         : value;
   });
 
+  console.log("params", params);
+
   // Configure request
   const requestConfig: RequestInit = {
     method,
@@ -38,6 +40,7 @@ export async function getDataFromServer<T = any>(
       queryParams.append(key, value);
     });
     url += `?${queryParams.toString()}`;
+    console.log("GET URL:", url);
   } else {
     // Add parameters to body for POST requests
     requestConfig.body = JSON.stringify(processedParams);

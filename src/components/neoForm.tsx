@@ -23,7 +23,7 @@ const NeoForm: React.FC<{}> = () => {
       const data: NormalizedNearEarthObject[] = await getDataFromServer({
         endpoint: "neo",
         method: "POST",
-        params: { startDate: startDate, endDate: endDate },
+        params: { start_date: startDate, end_date: endDate },
       });
       setObjects(data || []);
     } catch (error) {
