@@ -42,13 +42,13 @@ const NASA_API_KEY = process.env.NASA_API_KEY;
 // Astronomy Picture of the Day
 app.get(`/api/v1/apod/:date?`, async (req: Request, res: Response) => {
   try {
-    const date = req.params.date;
+    const date = req.query.date;
     const nasaRes = await axios.get<ApodResponseType>(
       "https://api.nasa.gov/planetary/apod",
       {
         params: {
           api_key: NASA_API_KEY,
-          ...(date && { date }),
+          date: date,
         },
       }
     );
@@ -64,22 +64,15 @@ app.get(`/api/v1/apod/:date?`, async (req: Request, res: Response) => {
 // Near Earth Objects Feed
 app.post(`/api/v1/neo`, async (req: Request, res: Response) => {
   try {
-    const { startDate, endDate } = req.body;
-
-    console.log(
-      "Received request with startDate:",
-      startDate,
-      "endDate:",
-      endDate
-    );
+    const { start_date, end_date } = req.body;
 
     const nasaRes = await axios.get<NeoResponseType>(
       "https://api.nasa.gov/neo/rest/v1/feed",
       {
         params: {
           api_key: NASA_API_KEY,
-          ...(startDate && { startDate }),
-          ...(endDate && { endDate }),
+          ...(start_date && { start_date }),
+          ...(end_date && { end_date }),
         },
       }
     );
@@ -89,8 +82,6 @@ app.post(`/api/v1/neo`, async (req: Request, res: Response) => {
     const NEOs = extractAllNEOs(respObj);
     const normalizedNEOs = normalizeAsteroidSizes(NEOs);
 
-    console.log(normalizedNEOs.length, " normalized NEOs size");
-
     res.send(normalizedNEOs);
   } catch (error) {
     console.error("Error fetching NEO:", error);
@@ -99,7 +90,7 @@ app.post(`/api/v1/neo`, async (req: Request, res: Response) => {
 });
 
 // Near Earth Objects Lookup
-app.get(`/api/v1/neo/:asteroid_id`, async (req: Request, res: Response) => {
+app.post(`/api/v1/neo/:asteroid_id`, async (req: Request, res: Response) => {
   try {
     const { asteroid_id } = req.params;
 
@@ -123,21 +114,20 @@ app.get(`/api/v1/neo/:asteroid_id`, async (req: Request, res: Response) => {
 // Coronal Mass Ejection Analysis
 app.post(`/api/v1/cme`, async (req: Request, res: Response) => {
   try {
-    const { startDate, endDate } = req.params;
+    const { start_date, end_date } = req.params;
 
     const nasaRes = await axios.get<CoronalMassEjectionAnalysis[]>(
       `https://api.nasa.gov/DONKI/CMEAnalysis`,
       {
         params: {
           api_key: NASA_API_KEY,
-          ...(startDate && { startDate }),
-          ...(endDate && { endDate }),
+          ...(start_date && { start_date }),
+          ...(end_date && { end_date }),
         },
       }
     );
 
     const respObj: CoronalMassEjectionAnalysis[] = nasaRes.data;
-    console.log(" CME data length", respObj);
     res.send(respObj);
   } catch (error) {
     console.error("Error fetching CME data:", error);

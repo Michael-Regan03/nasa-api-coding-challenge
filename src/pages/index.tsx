@@ -4,6 +4,7 @@ import { commonExample } from "@/utils/utils.ts";
 import { NeoResponseType, NearEarthObject } from "@/typings/types";
 import NeoForm from "@/components/neoForm";
 import CMEForm from "@/components/cme/cmeForm";
+import APODForm from "@/components/apod/apodForm";
 
 const HomePage = (): JSX.Element => {
   const urlWithProxy = `api/v1/neo`;
@@ -33,6 +34,7 @@ const HomePage = (): JSX.Element => {
   return (
     <div className={styles.app}>
       <img src="/images/nasa-logo.svg" alt="nasa logo" />
+      <APODForm></APODForm>
       <button className={styles.button} onClick={getDataFromServer}>
         Access server using proxy
       </button>

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { DateRangeForm } from "../dateRangeForm";
 import { SunVisualisation } from "../cme/sunVisualisation";
 import { CoronalMassEjectionAnalysis } from "@/typings/types";
+import { getDataFromServer } from "@/components/getDataFromServer";
 
 const CMEForm: React.FC = () => {
   const [startDate, setStartDate] = useState<Date | undefined>();
@@ -17,33 +18,16 @@ const CMEForm: React.FC = () => {
     }
     setLoading(true);
     try {
-      await getDataFromServer();
+      const data: CoronalMassEjectionAnalysis[] = await getDataFromServer({
+        endpoint: "cme",
+        method: "POST",
+        params: { start_date: startDate, end_date: endDate },
+      });
+      setCmes(data || []);
     } catch (err) {
       console.error("Failed to fetch CME data:", err);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const getDataFromServer = async () => {
-    const start = startDate!.toISOString().split("T")[0];
-    const end = endDate!.toISOString().split("T")[0];
-
-    const res = await fetch("/api/v1/cme", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ startDate: start, endDate: end }),
-    });
-
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
-    }
-
-    const data = await res.json();
-    setCmes(data);
-
-    if (!Array.isArray(data)) {
-      throw new Error("Invalid data format received");
     }
   };
 
