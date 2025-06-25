@@ -24,7 +24,7 @@ export const DateRangeForm: React.FC<DateRangeFormProps> = ({
   loading,
 }) => {
   return (
-    <div className="flex gap-4 flex-wrap items-end">
+    <div className="w-full max-w-2xl space-y-4">
       <DatePickerWithInput
         title="Start Date"
         value={startDate}
@@ -37,8 +37,12 @@ export const DateRangeForm: React.FC<DateRangeFormProps> = ({
         onChange={onEndDateChange}
         placeholder="Select an end date"
       />
-      <Button onClick={onSubmit} disabled={loading}>
-        {loading ? "Loading..." : "Fetch"}
+      <Button
+        onClick={onSubmit}
+        disabled={loading}
+        className="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 disabled:bg-gray-400"
+      >
+        {loading ? "Loading..." : "Fetch Data"}
       </Button>
     </div>
   );
