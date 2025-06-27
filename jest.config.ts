@@ -1,6 +1,6 @@
 const config = {
   preset: "ts-jest/presets/js-with-ts",
-  rootDir: process.cwd(),
+  rootDir: "./src",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "node"],
   moduleDirectories: ["node_modules", "src"],
   moduleNameMapper: {
