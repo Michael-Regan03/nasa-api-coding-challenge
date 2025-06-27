@@ -37,8 +37,21 @@ export const DateRangeForm: React.FC<DateRangeFormProps> = ({
         onChange={onEndDateChange}
         placeholder="Select an end date"
       />
+
       <Button
-        onClick={onSubmit}
+        onClick={() => {
+          if (startDate && endDate) {
+            const diffInMs = Math.abs(endDate.getTime() - startDate.getTime()); // Calculate the absolute time difference between two dates in milliseconds
+            const diffInDays = diffInMs / (1000 * 60 * 60 * 24); // Duration between dates in full calendar days
+
+            if (diffInDays > 7) {
+              alert("Date range must be within 7 days.");
+              return;
+            }
+          }
+
+          onSubmit();
+        }}
         disabled={loading}
         className="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 disabled:bg-gray-400"
       >
