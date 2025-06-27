@@ -4,6 +4,12 @@ import { render, screen } from "@testing-library/react";
 import NeoSizeDisplay from "../../../components/neo/neoSizeDisplay";
 import { mockNormalisedNearEarthObjects } from "../../../tests/mocks/mockNearEarthObjects";
 
+// Mock  react-router-dom
+const mockNavigate = jest.fn();
+jest.mock("react-router-dom", () => ({
+  useNavigate: () => mockNavigate,
+}));
+
 describe("NeoSizeDisplay", () => {
   it("renders 'No asteroids to display.' when objects array is empty", () => {
     render(<NeoSizeDisplay objects={[]} />);
