@@ -1,6 +1,6 @@
 import { JSX } from "react";
 import styles from "./index.module.css";
-import NeoForm from "@/components/neoForm";
+import NeoForm from "@/components/neo/neoForm";
 
 const NeoPage = (): JSX.Element => {
   return (
