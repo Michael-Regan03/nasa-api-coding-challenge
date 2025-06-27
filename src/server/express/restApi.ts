@@ -90,7 +90,8 @@ app.post(`/api/v1/neo`, async (req: Request, res: Response) => {
 });
 
 // Near Earth Objects Lookup
-app.post(`/api/v1/neo/:asteroid_id`, async (req: Request, res: Response) => {
+// Change your backend endpoint to match the frontend call
+app.get(`/api/v1/neo/:asteroid_id`, async (req: Request, res: Response) => {
   try {
     const { asteroid_id } = req.params;
 
@@ -98,31 +99,33 @@ app.post(`/api/v1/neo/:asteroid_id`, async (req: Request, res: Response) => {
       `https://api.nasa.gov/neo/rest/v1/neo/${asteroid_id}`,
       {
         params: {
-          api_key: NASA_API_KEY,
+          api_key: process.env.NASA_API_KEY,
         },
       }
     );
 
-    const respObj: NearEarthObject = nasaRes.data;
-    res.send(respObj);
+    res.json(nasaRes.data);
   } catch (error) {
-    console.error("Error fetching NEO astroid:", error);
-    res.status(500).json({ error: "Failed to fetch NEO astroid" });
+    console.error("Error fetching NEO:", error);
+    res.status(500).json({
+      error: "Failed to fetch NEO",
+      details: error instanceof Error ? error.message : "Unknown error",
+    });
   }
 });
 
 // Coronal Mass Ejection Analysis
 app.post(`/api/v1/cme`, async (req: Request, res: Response) => {
   try {
-    const { start_date, end_date } = req.params;
+    const { startDate, endDate } = req.body;
 
     const nasaRes = await axios.get<CoronalMassEjectionAnalysis[]>(
       `https://api.nasa.gov/DONKI/CMEAnalysis`,
       {
         params: {
           api_key: NASA_API_KEY,
-          ...(start_date && { start_date }),
-          ...(end_date && { end_date }),
+          ...(startDate && { startDate }),
+          ...(endDate && { endDate }),
         },
       }
     );

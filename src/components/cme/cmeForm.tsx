@@ -21,9 +21,10 @@ const CMEForm: React.FC = () => {
       const data: CoronalMassEjectionAnalysis[] = await getDataFromServer({
         endpoint: "cme",
         method: "POST",
-        params: { start_date: startDate, end_date: endDate },
+        params: { startDate: startDate, endDate: endDate },
       });
       setCmes(data || []);
+      console.log(data);
     } catch (err) {
       console.error("Failed to fetch CME data:", err);
     } finally {
