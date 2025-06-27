@@ -48,6 +48,10 @@
     "three": "^0.177.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.27.7",
+    "@babel/preset-env": "^7.27.2",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
     "@types/cors": "^2.8.17",
     "@types/css-modules": "^1.0.5",
     "@types/d3": "^7.4.3",
