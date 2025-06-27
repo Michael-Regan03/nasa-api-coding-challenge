@@ -51,7 +51,12 @@ const NeoForm: React.FC<{}> = () => {
 
       <div className="w-full">
         <NeoCloseApproachVisualizer neos={objects} flag={false} />
-        <NeoSizeDisplay objects={objects} />
+        <div className="flex flex-col items-center justify-center">
+          <h1 className="text-4xl font-bold text-center mb-8 p mt-4">
+            Near Earth Objects Size Comparison
+          </h1>
+          <NeoSizeDisplay objects={objects} />
+        </div>
       </div>
     </div>
   );

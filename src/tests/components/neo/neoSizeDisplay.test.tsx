@@ -11,9 +11,9 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe("NeoSizeDisplay", () => {
-  it("renders 'No asteroids to display.' when objects array is empty", () => {
+  it("renders 'No NEos to display.' when objects array is empty", () => {
     render(<NeoSizeDisplay objects={[]} />);
-    expect(screen.getByText(/no asteroids to display/i)).toBeInTheDocument();
+    expect(screen.getByText(/no NEOs to display/i)).toBeInTheDocument();
   });
 });
 

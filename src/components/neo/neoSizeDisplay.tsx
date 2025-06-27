@@ -15,10 +15,10 @@ const NeoSizeDisplay: React.FC<NeoSizeDisplayProps> = ({
   maxDisplaySize = 100,
 }) => {
   const navigate = useNavigate();
-  if (objects.length === 0) return <p>No asteroids to display.</p>;
+  if (objects.length === 0) return <p>No NEOs to display.</p>;
 
   return (
-    <div className="flex gap-4 flex-wrap items-center">
+    <div className="flex gap-4 flex-wrap items-center border-2 border-gray-300 hover:border-4 hover:border-blue-500 transition-all p-4 rounded-lg">
       {objects.map((obj, index) => {
         const pixelSize = (obj.diameter_percent_of_max / 100) * maxDisplaySize;
 
@@ -39,7 +39,9 @@ const NeoSizeDisplay: React.FC<NeoSizeDisplayProps> = ({
               alt={obj.name}
               width={pixelSize}
               height={pixelSize}
-              title={obj.name}
+              title={`
+              ${obj.name}
+              Diameter: ${obj.estimated_diameter.kilometers.estimated_diameter_min}km - ${obj.estimated_diameter.kilometers.estimated_diameter_max}km`}
               style={{
                 objectFit: "contain",
                 display: "block",
