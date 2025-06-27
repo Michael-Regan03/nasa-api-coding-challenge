@@ -50,7 +50,7 @@ const NeoForm: React.FC<{}> = () => {
       />
 
       <div className="w-full">
-        <NeoCloseApproachVisualizer neos={objects} colour="blue" />
+        <NeoCloseApproachVisualizer neos={objects} flag={false} />
         <NeoSizeDisplay objects={objects} />
       </div>
     </div>

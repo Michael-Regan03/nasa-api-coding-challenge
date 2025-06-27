@@ -2,6 +2,7 @@
 
 import React from "react";
 import { NormalizedNearEarthObject } from "@/typings/types";
+import { useNavigate } from "react-router-dom";
 
 type NeoSizeDisplayProps = {
   objects: NormalizedNearEarthObject[];
@@ -13,6 +14,7 @@ const NeoSizeDisplay: React.FC<NeoSizeDisplayProps> = ({
   objects,
   maxDisplaySize = 100,
 }) => {
+  const navigate = useNavigate();
   if (objects.length === 0) return <p>No asteroids to display.</p>;
 
   return (
@@ -23,6 +25,7 @@ const NeoSizeDisplay: React.FC<NeoSizeDisplayProps> = ({
         return (
           <div
             key={obj.id || index}
+            onClick={() => navigate(`/neo/${obj.id}`)}
             style={{
               display: "flex",
               alignItems: "center",
