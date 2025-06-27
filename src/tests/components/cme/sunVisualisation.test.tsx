@@ -73,7 +73,7 @@ jest.mock("three/examples/jsm/loaders/GLTFLoader", () => {
 });
 
 // 4. Mock createCMEMarker
-jest.mock("../../../components/cme/createcCMEMarker", () => ({
+jest.mock("../../../components/cme/createCMEMarker", () => ({
   createCMEMarker: jest.fn(() => ({
     mesh: {
       userData: {},

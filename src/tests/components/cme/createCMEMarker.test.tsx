@@ -1,4 +1,4 @@
-import { createCMEMarker } from "../../../components/cme/createcCMEMarker";
+import { createCMEMarker } from "../../../components/cme/createCMEMarker";
 import * as THREE from "three";
 
 // Mock THREE.js
