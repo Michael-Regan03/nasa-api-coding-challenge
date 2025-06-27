@@ -15,8 +15,8 @@ code {
 }
 
 .orbit-container {
-  width: 400px;
-  height: 400px;
-  margin: auto;
+  width: 100vw;
+  height: 75vh;
+  margin: 0 auto;
   position: relative;
 }

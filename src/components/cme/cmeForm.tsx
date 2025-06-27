@@ -32,15 +32,17 @@ const CMEForm: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6 p-4">
-      <DateRangeForm
-        startDate={startDate}
-        endDate={endDate}
-        onStartDateChange={setStartDate}
-        onEndDateChange={setEndDate}
-        onSubmit={onSubmit}
-        loading={loading}
-      />
+    <div className="flex flex-col gap-12 p-4">
+      <div className=" flex flex-col items-center bg-gray-50">
+        <DateRangeForm
+          startDate={startDate}
+          endDate={endDate}
+          onStartDateChange={setStartDate}
+          onEndDateChange={setEndDate}
+          onSubmit={onSubmit}
+          loading={loading}
+        />
+      </div>
       <div className="border rounded-lg overflow-hidden">
         <SunVisualisation cmes={cmes} />
       </div>

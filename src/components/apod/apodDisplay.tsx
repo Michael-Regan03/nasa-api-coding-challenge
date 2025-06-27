@@ -15,7 +15,7 @@ export const ApodDisplay: React.FC<{
   const { title, explanation, url, hdurl, date } = data;
 
   return (
-    <Card className={`w-full max-w-2xl `}>
+    <Card className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <CardHeader>
         <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
         {date && (

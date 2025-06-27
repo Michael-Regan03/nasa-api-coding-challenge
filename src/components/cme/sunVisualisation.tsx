@@ -3,8 +3,9 @@ import React, { useRef, useEffect, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { createCMEMarker } from "@/components/cme/createcCMEMarker";
+import { createCMEMarker } from "./createCMEMarker";
 import { CoronalMassEjectionAnalysis } from "@/typings/types";
+import { getStarfield } from "./getStarfield";
 
 interface SunVisualisationProps {
   onLoaded?: () => void;
@@ -86,6 +87,8 @@ export const SunVisualisation: React.FC<SunVisualisationProps> = ({
     };
 
     loadModel();
+
+    scene.add(getStarfield());
 
     let animationFrameId: number;
     const animate = () => {
