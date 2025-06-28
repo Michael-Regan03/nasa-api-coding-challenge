@@ -34,7 +34,7 @@ const CMEForm: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-12 p-4">
-      <div className=" flex flex-col items-center bg-gray-50">
+      <div className=" flex flex-col items-center">
         <DateRangeForm
           startDate={startDate}
           endDate={endDate}

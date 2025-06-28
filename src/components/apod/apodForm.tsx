@@ -36,7 +36,7 @@ const APODForm: React.FC<{}> = () => {
   }, []);
 
   return (
-    <div className="min-h-screen px-4 py-8 flex flex-col items-center gap-8 bg-gray-50 ">
+    <div className="min-h-screen px-4 py-8 flex flex-col items-center gap-8">
       <div className="w-full max-w-2xl space-y-4">
         <DatePickerWithInput
           title="Select Date"

@@ -39,7 +39,7 @@ const NeoForm: React.FC<{}> = () => {
   }, []);
 
   return (
-    <div className="min-h-screen py-8 flex flex-col items-center bg-gray-50 gap-6">
+    <div className="min-h-screen py-8 flex flex-col items-center gap-6">
       <DateRangeForm
         startDate={startDate}
         endDate={endDate}
