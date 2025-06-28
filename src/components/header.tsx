@@ -3,7 +3,7 @@ import { NavBar } from "@/components/navBar";
 
 const Header = () => {
   return (
-    <header className="flex items-center justify-between px-6 py-4 border-b bg-white shadow-sm">
+    <header className="flex flex-col md:flex-row md:items-center md:justify-between px-6 py-4 border-b bg-white shadow-sm">
       <div className="flex items-center gap-4">
         <img
           src="/images/nasa-logo.svg"

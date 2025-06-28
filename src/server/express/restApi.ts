@@ -90,13 +90,12 @@ app.post(`/api/v1/neo`, async (req: Request, res: Response) => {
 });
 
 // Near Earth Objects Lookup
-// Change your backend endpoint to match the frontend call
-app.get(`/api/v1/neo/:asteroid_id`, async (req: Request, res: Response) => {
+app.get(`/api/v1/neo/:neo_id`, async (req: Request, res: Response) => {
   try {
-    const { asteroid_id } = req.params;
+    const { neo_id } = req.params;
 
     const nasaRes = await axios.get<NearEarthObject>(
-      `https://api.nasa.gov/neo/rest/v1/neo/${asteroid_id}`,
+      `https://api.nasa.gov/neo/rest/v1/neo/${neo_id}`,
       {
         params: {
           api_key: process.env.NASA_API_KEY,

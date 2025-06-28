@@ -5,27 +5,54 @@ import {
   NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
+import { Button } from "./ui/button";
 
 export function NavBar() {
+  const navigate = useNavigate();
   return (
-    <NavigationMenu>
-      <NavigationMenuList>
+    <NavigationMenu className="w-full">
+      <NavigationMenuList className="flex-wrap justify-right gap-1 md:gap-2">
         <NavigationMenuItem>
-          <a href="/apod" className={cn("p-2", NavigationMenuLink)}>
+          <Button
+            onClick={() => navigate("/apod")}
+            className={cn(
+              "p-2",
+              NavigationMenuLink,
+              "min-w-0 bg-transparent shadow-none"
+            )}
+            variant="ghost"
+          >
             Astronomy Picture of the Day (APOD)
-          </a>
+          </Button>
         </NavigationMenuItem>
 
         <NavigationMenuItem>
-          <a href="/neo" className={cn("p-2", NavigationMenuLink)}>
+          <Button
+            onClick={() => navigate("/neo")}
+            className={cn(
+              "p-2",
+              NavigationMenuLink,
+              "min-w-0 bg-transparent shadow-none"
+            )}
+            variant="ghost"
+          >
             Near Earth Objects (NEO)
-          </a>
+          </Button>
         </NavigationMenuItem>
 
         <NavigationMenuItem>
-          <a href="/cme" className={cn("p-2", NavigationMenuLink)}>
+          <Button
+            onClick={() => navigate("/cme")}
+            className={cn(
+              "p-2",
+              NavigationMenuLink,
+              "min-w-0 bg-transparent shadow-none"
+            )}
+            variant="ghost"
+          >
             Coronal Mass Ejection (CME)
-          </a>
+          </Button>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
