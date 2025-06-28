@@ -1,9 +1,7 @@
-import packageJSON from "../../../package.json";
 import express, { Application } from "express";
 import cors from "cors";
 import { Request, Response } from "express";
 import {
-  RespExampleType,
   ApodResponseType,
   NeoResponseType,
   NearEarthObject,
